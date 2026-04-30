@@ -8,10 +8,18 @@ const difficultyLabels: Record<Difficulty, string> = {
   fun: "Divertido",
 };
 
-const difficultyColors: Record<Difficulty, string> = {
-  easy: "bg-green-100 text-green-800",
-  medium: "bg-amber-100 text-amber-800",
-  fun: "bg-orange-100 text-orange-800",
+const difficultyStyles: Record<Difficulty, string> = {
+  easy:   "bg-[hsl(142,28%,88%)] text-[hsl(142,28%,30%)]",
+  medium: "bg-[hsl(40,60%,88%)]  text-[hsl(35,45%,30%)]",
+  fun:    "bg-[hsl(14,40%,88%)]  text-[hsl(14,40%,30%)]",
+};
+
+const categoryIcons: Record<string, string> = {
+  "Creatividad": "✦",
+  "Social": "◈",
+  "Íntimo": "◇",
+  "Improvisación": "◉",
+  "Emoción": "◆",
 };
 
 type GameCardProps = {
@@ -21,43 +29,50 @@ type GameCardProps = {
 };
 
 export function GameCard({ game, recommended, onClick }: GameCardProps) {
+  const icon = categoryIcons[game.category] ?? "○";
+
   return (
     <button
       onClick={onClick}
       data-testid={`game-card-${game.id}`}
       className={cn(
         "w-full text-left rounded-2xl p-5 border transition-all duration-200",
-        "bg-card border-card-border hover:shadow-md active:scale-[0.99]",
-        recommended && "ring-1 ring-primary/30"
+        "bg-card border-card-border",
+        "hover:shadow-md hover:-translate-y-px active:scale-[0.99] active:shadow-none active:translate-y-0",
+        recommended && "ring-1 ring-primary/25 shadow-sm"
       )}
     >
       {recommended && (
-        <div className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider">
-          Recomendado
+        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-primary mb-3 uppercase tracking-widest">
+          <span>★</span>
+          <span>Recomendado</span>
         </div>
       )}
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <h3 className="font-semibold text-foreground text-base leading-snug">{game.title}</h3>
-        <span
-          className={cn(
-            "shrink-0 text-xs font-medium px-2 py-0.5 rounded-full",
-            difficultyColors[game.difficulty]
-          )}
-        >
+
+      <div className="flex items-start justify-between gap-3 mb-2.5">
+        <h3 className="font-serif text-[18px] font-semibold text-foreground leading-snug">
+          {game.title}
+        </h3>
+        <span className={cn("shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full mt-0.5", difficultyStyles[game.difficulty])}>
           {difficultyLabels[game.difficulty]}
         </span>
       </div>
-      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{game.description}</p>
-      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1">
-          <Clock className="w-3.5 h-3.5" />
+
+      <p className="text-[13px] text-muted-foreground mb-4 leading-relaxed">{game.description}</p>
+
+      <div className="flex items-center gap-4 text-[12px] text-muted-foreground">
+        <span className="flex items-center gap-1.5">
+          <Clock className="w-3.5 h-3.5 shrink-0" />
           {game.durationMin} min
         </span>
-        <span className="flex items-center gap-1">
-          <Users className="w-3.5 h-3.5" />
-          {game.minPlayers}{game.maxPlayers ? `–${game.maxPlayers}` : "+"} personas
+        <span className="flex items-center gap-1.5">
+          <Users className="w-3.5 h-3.5 shrink-0" />
+          {game.minPlayers}{game.maxPlayers ? `–${game.maxPlayers}` : "+"} pers.
         </span>
-        <span className="ml-auto text-xs bg-muted px-2 py-0.5 rounded-full">{game.category}</span>
+        <span className="ml-auto flex items-center gap-1 text-muted-foreground/70 bg-muted/60 px-2.5 py-1 rounded-full">
+          <span className="text-[10px]">{icon}</span>
+          <span>{game.category}</span>
+        </span>
       </div>
     </button>
   );

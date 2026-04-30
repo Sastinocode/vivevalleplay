@@ -11,7 +11,7 @@ export function ScreenContainer({ children, className, centered }: ScreenContain
   return (
     <div
       className={cn(
-        "min-h-screen w-full max-w-md mx-auto px-5 py-8 flex flex-col",
+        "min-h-[100dvh] w-full max-w-md mx-auto px-6 pt-10 pb-safe flex flex-col",
         centered && "items-center justify-center",
         className
       )}
