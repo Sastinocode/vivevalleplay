@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -67,7 +67,6 @@
   --radius-xl: calc(var(--radius) + 6px);
 }
 
-/* LIGHT MODE */
 :root {
   --button-outline: rgba(0,0,0, .08);
   --badge-outline: rgba(0,0,0, .05);
@@ -75,73 +74,71 @@
   --elevate-1: rgba(0,0,0, .025);
   --elevate-2: rgba(0,0,0, .06);
 
-  /* Warm sandy background — slightly deeper than before for more contrast */
-  --background: 38 28% 94%;
-  --foreground: 22 22% 17%;
-  --border: 30 18% 82%;
+  /* Vive Valle palette */
+  --background: 40 22% 94%;       /* #f2ede6 warm cream */
+  --foreground: 78 26% 10%;       /* #1e2212 ink */
+  --border: 76 14% 82%;
+  --card: 40 30% 97%;
+  --card-foreground: 78 26% 10%;
+  --card-border: 76 14% 88%;
 
-  /* Cards float just above the background */
-  --card: 38 22% 97%;
-  --card-foreground: 22 22% 17%;
-  --card-border: 30 16% 86%;
+  --sidebar: 40 22% 94%;
+  --sidebar-foreground: 78 26% 10%;
+  --sidebar-border: 76 14% 82%;
+  --sidebar-primary: 81 29% 27%;
+  --sidebar-primary-foreground: 40 30% 97%;
+  --sidebar-accent: 76 14% 88%;
+  --sidebar-accent-foreground: 78 26% 10%;
+  --sidebar-ring: 81 29% 27%;
 
-  --sidebar: 38 28% 94%;
-  --sidebar-foreground: 22 22% 17%;
-  --sidebar-border: 30 18% 82%;
-  --sidebar-primary: 14 42% 52%;
-  --sidebar-primary-foreground: 38 30% 97%;
-  --sidebar-accent: 30 18% 88%;
-  --sidebar-accent-foreground: 22 22% 17%;
-  --sidebar-ring: 14 42% 52%;
+  --popover: 40 30% 97%;
+  --popover-foreground: 78 26% 10%;
+  --popover-border: 76 14% 88%;
 
-  --popover: 38 22% 97%;
-  --popover-foreground: 22 22% 17%;
-  --popover-border: 30 16% 86%;
+  /* Olive primary — Vive Valle's brand green */
+  --primary: 81 29% 27%;          /* #4a5730 */
+  --primary-foreground: 40 30% 97%;
 
-  /* Terracotta — the soul of the palette */
-  --primary: 14 42% 52%;
-  --primary-foreground: 38 30% 97%;
+  /* Terra secondary — warm terracotta accent */
+  --secondary: 21 47% 54%;        /* #c87a4e */
+  --secondary-foreground: 0 0% 100%;
 
-  /* Olive green — secondary accent */
-  --secondary: 78 18% 46%;
-  --secondary-foreground: 38 30% 97%;
+  /* Olive pale muted */
+  --muted: 78 20% 83%;            /* #d6dcc8 */
+  --muted-foreground: 76 12% 42%;
 
-  /* Warm stone muted */
-  --muted: 34 16% 87%;
-  --muted-foreground: 22 14% 42%;
-
-  /* Warm cream accent */
-  --accent: 38 28% 91%;
-  --accent-foreground: 22 22% 17%;
+  /* Cream-dark accent */
+  --accent: 35 20% 88%;           /* #ede8df */
+  --accent-foreground: 78 26% 10%;
 
   --destructive: 2 42% 48%;
-  --destructive-foreground: 38 30% 97%;
+  --destructive-foreground: 40 30% 97%;
 
-  --input: 30 16% 86%;
-  --ring: 14 42% 52%;
+  --input: 76 14% 88%;
+  --ring: 81 29% 27%;
 
-  --chart-1: 14 42% 52%;
-  --chart-2: 78 18% 46%;
-  --chart-3: 38 30% 68%;
-  --chart-4: 22 26% 60%;
+  --chart-1: 81 29% 27%;
+  --chart-2: 21 47% 54%;
+  --chart-3: 40 30% 68%;
+  --chart-4: 78 26% 40%;
   --chart-5: 32 22% 42%;
 
-  --app-font-sans: 'DM Sans', sans-serif;
-  --app-font-serif: 'Cormorant Garamond', Georgia, serif;
+  /* Syne for headings, DM Sans for body */
+  --app-font-sans: 'DM Sans', system-ui, sans-serif;
+  --app-font-serif: 'Syne', system-ui, sans-serif;
   --app-font-mono: Menlo, monospace;
 
-  /* Generous radius for a warm, rounded feel */
   --radius: 1rem;
 
-  /* Warm-tinted shadows */
-  --shadow-2xs: 0px 1px 2px 0px hsl(22 20% 60% / 0.10);
-  --shadow-xs:  0px 1px 3px 0px hsl(22 20% 60% / 0.12);
-  --shadow-sm:  0px 2px 6px 0px hsl(22 20% 60% / 0.10), 0px 1px 2px -1px hsl(22 20% 60% / 0.08);
-  --shadow:     0px 2px 8px 0px hsl(22 20% 60% / 0.12), 0px 1px 3px -1px hsl(22 20% 60% / 0.08);
-  --shadow-md:  0px 4px 12px 0px hsl(22 20% 60% / 0.12), 0px 2px 4px -1px hsl(22 20% 60% / 0.08);
-  --shadow-lg:  0px 8px 24px 0px hsl(22 20% 60% / 0.12), 0px 4px 8px -2px hsl(22 20% 60% / 0.08);
-  --shadow-xl:  0px 12px 32px 0px hsl(22 20% 60% / 0.14), 0px 6px 12px -2px hsl(22 20% 60% / 0.10);
-  --shadow-2xl: 0px 20px 48px 0px hsl(22 20% 60% / 0.16);
+  /* Warm olive-tinted shadows */
+  --shadow-2xs: 0px 1px 2px 0px hsl(78 20% 40% / 0.08);
+  --shadow-xs:  0px 1px 3px 0px hsl(78 20% 40% / 0.10);
+  --shadow-sm:  0px 2px 6px 0px hsl(78 20% 40% / 0.09), 0px 1px 2px -1px hsl(78 20% 40% / 0.07);
+  --shadow:     0px 2px 8px 0px hsl(78 20% 40% / 0.10), 0px 1px 3px -1px hsl(78 20% 40% / 0.07);
+  --shadow-md:  0px 4px 12px 0px hsl(78 20% 40% / 0.11), 0px 2px 4px -1px hsl(78 20% 40% / 0.07);
+  --shadow-lg:  0px 8px 24px 0px hsl(78 20% 40% / 0.11), 0px 4px 8px -2px hsl(78 20% 40% / 0.07);
+  --shadow-xl:  0px 12px 32px 0px hsl(78 20% 40% / 0.12), 0px 6px 12px -2px hsl(78 20% 40% / 0.08);
+  --shadow-2xl: 0px 20px 48px 0px hsl(78 20% 40% / 0.14);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -161,63 +158,54 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
-/* Light-only app — dark mirrors light */
+/* Light-only app */
 .dark {
   --button-outline: rgba(0,0,0, .08);
   --badge-outline: rgba(0,0,0, .05);
   --opaque-button-border-intensity: -10;
   --elevate-1: rgba(0,0,0, .025);
   --elevate-2: rgba(0,0,0, .06);
-
-  --background: 38 28% 94%;
-  --foreground: 22 22% 17%;
-  --border: 30 18% 82%;
-  --card: 38 22% 97%;
-  --card-foreground: 22 22% 17%;
-  --card-border: 30 16% 86%;
-  --sidebar: 38 28% 94%;
-  --sidebar-foreground: 22 22% 17%;
-  --sidebar-border: 30 18% 82%;
-  --sidebar-primary: 14 42% 52%;
-  --sidebar-primary-foreground: 38 30% 97%;
-  --sidebar-accent: 30 18% 88%;
-  --sidebar-accent-foreground: 22 22% 17%;
-  --sidebar-ring: 14 42% 52%;
-  --popover: 38 22% 97%;
-  --popover-foreground: 22 22% 17%;
-  --popover-border: 30 16% 86%;
-  --primary: 14 42% 52%;
-  --primary-foreground: 38 30% 97%;
-  --secondary: 78 18% 46%;
-  --secondary-foreground: 38 30% 97%;
-  --muted: 34 16% 87%;
-  --muted-foreground: 22 14% 42%;
-  --accent: 38 28% 91%;
-  --accent-foreground: 22 22% 17%;
+  --background: 40 22% 94%;
+  --foreground: 78 26% 10%;
+  --border: 76 14% 82%;
+  --card: 40 30% 97%;
+  --card-foreground: 78 26% 10%;
+  --card-border: 76 14% 88%;
+  --sidebar: 40 22% 94%;
+  --sidebar-foreground: 78 26% 10%;
+  --sidebar-border: 76 14% 82%;
+  --sidebar-primary: 81 29% 27%;
+  --sidebar-primary-foreground: 40 30% 97%;
+  --sidebar-accent: 76 14% 88%;
+  --sidebar-accent-foreground: 78 26% 10%;
+  --sidebar-ring: 81 29% 27%;
+  --popover: 40 30% 97%;
+  --popover-foreground: 78 26% 10%;
+  --popover-border: 76 14% 88%;
+  --primary: 81 29% 27%;
+  --primary-foreground: 40 30% 97%;
+  --secondary: 21 47% 54%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 78 20% 83%;
+  --muted-foreground: 76 12% 42%;
+  --accent: 35 20% 88%;
+  --accent-foreground: 78 26% 10%;
   --destructive: 2 42% 48%;
-  --destructive-foreground: 38 30% 97%;
-  --input: 30 16% 86%;
-  --ring: 14 42% 52%;
-  --chart-1: 14 42% 52%;
-  --chart-2: 78 18% 46%;
-  --chart-3: 38 30% 68%;
-  --chart-4: 22 26% 60%;
-  --chart-5: 32 22% 42%;
-
-  --shadow-2xs: 0px 1px 2px 0px hsl(22 20% 60% / 0.10);
-  --shadow-xs:  0px 1px 3px 0px hsl(22 20% 60% / 0.12);
-  --shadow-sm:  0px 2px 6px 0px hsl(22 20% 60% / 0.10), 0px 1px 2px -1px hsl(22 20% 60% / 0.08);
-  --shadow:     0px 2px 8px 0px hsl(22 20% 60% / 0.12), 0px 1px 3px -1px hsl(22 20% 60% / 0.08);
-  --shadow-md:  0px 4px 12px 0px hsl(22 20% 60% / 0.12), 0px 2px 4px -1px hsl(22 20% 60% / 0.08);
-  --shadow-lg:  0px 8px 24px 0px hsl(22 20% 60% / 0.12), 0px 4px 8px -2px hsl(22 20% 60% / 0.08);
-  --shadow-xl:  0px 12px 32px 0px hsl(22 20% 60% / 0.14), 0px 6px 12px -2px hsl(22 20% 60% / 0.10);
-  --shadow-2xl: 0px 20px 48px 0px hsl(22 20% 60% / 0.16);
+  --destructive-foreground: 40 30% 97%;
+  --input: 76 14% 88%;
+  --ring: 81 29% 27%;
+  --shadow-2xs: 0px 1px 2px 0px hsl(78 20% 40% / 0.08);
+  --shadow-xs:  0px 1px 3px 0px hsl(78 20% 40% / 0.10);
+  --shadow-sm:  0px 2px 6px 0px hsl(78 20% 40% / 0.09), 0px 1px 2px -1px hsl(78 20% 40% / 0.07);
+  --shadow:     0px 2px 8px 0px hsl(78 20% 40% / 0.10), 0px 1px 3px -1px hsl(78 20% 40% / 0.07);
+  --shadow-md:  0px 4px 12px 0px hsl(78 20% 40% / 0.11), 0px 2px 4px -1px hsl(78 20% 40% / 0.07);
+  --shadow-lg:  0px 8px 24px 0px hsl(78 20% 40% / 0.11), 0px 4px 8px -2px hsl(78 20% 40% / 0.07);
+  --shadow-xl:  0px 12px 32px 0px hsl(78 20% 40% / 0.12), 0px 6px 12px -2px hsl(78 20% 40% / 0.08);
+  --shadow-2xl: 0px 20px 48px 0px hsl(78 20% 40% / 0.14);
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
 
   html {
     -webkit-tap-highlight-color: transparent;
@@ -231,16 +219,15 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Tighter kerning for headings */
+  /* Tight kerning for Syne headings */
   h1, h2, h3 {
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    font-family: var(--app-font-serif);
   }
 }
 
 @layer utilities {
-  input[type="search"]::-webkit-search-cancel-button {
-    @apply hidden;
-  }
+  input[type="search"]::-webkit-search-cancel-button { @apply hidden; }
 
   [contenteditable][data-placeholder]:empty::before {
     content: attr(data-placeholder);
@@ -265,9 +252,7 @@
     background-color: var(--elevate-2);
   }
 
-  .border.toggle-elevate::before {
-    inset: -1px;
-  }
+  .border.toggle-elevate::before { inset: -1px; }
 
   .hover-elevate:not(.no-default-hover-elevate),
   .active-elevate:not(.no-default-active-elevate),
@@ -312,15 +297,12 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 
   /* Safe area padding for notched devices */
   .pb-safe {
     padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
   }
-
   .pt-safe {
     padding-top: max(1rem, env(safe-area-inset-top));
   }

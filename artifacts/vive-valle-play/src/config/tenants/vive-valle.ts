@@ -2,10 +2,7 @@ import { TenantConfig } from "../types";
 
 /**
  * Tenant: Vive Valle Play
- * The flagship Vive Valle experience — rural houses, warm Mediterranean aesthetic.
- *
- * To create a new tenant, duplicate this file and adjust every field.
- * The engine (components, routing, game logic) is not touched.
+ * Olive + terracotta palette. Syne 800 headings, DM Sans body.
  */
 const vivevalle: TenantConfig = {
   id: "vive-valle",
@@ -18,15 +15,15 @@ const vivevalle: TenantConfig = {
   },
 
   colors: {
-    primary: "14 42% 52%",
-    primaryForeground: "38 30% 97%",
-    secondary: "78 18% 46%",
-    secondaryForeground: "38 30% 97%",
-    background: "38 28% 94%",
-    foreground: "22 22% 17%",
-    card: "38 22% 97%",
-    muted: "34 16% 87%",
-    accent: "38 28% 91%",
+    primary: "81 29% 27%",           /* #4a5730 olive */
+    primaryForeground: "40 30% 97%",
+    secondary: "21 47% 54%",         /* #c87a4e terra */
+    secondaryForeground: "0 0% 100%",
+    background: "40 22% 94%",
+    foreground: "78 26% 10%",        /* #1e2212 ink */
+    card: "40 30% 97%",
+    muted: "78 20% 83%",             /* #d6dcc8 olive-pale */
+    accent: "35 20% 88%",            /* #ede8df cream-dark */
   },
 
   content: {

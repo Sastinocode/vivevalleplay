@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vive Valle Play</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --olive: #4a5730;
+    --olive-light: #6b7a48;
+    --olive-pale: #d6dcc8;
+    --terra: #c87a4e;
+    --terra-light: #e09b74;
+    --cream: #f5f1ea;
+    --cream-dark: #ede8df;
+    --ink: #1e2212;
+    --ink-mid: #3a3d2e;
+    --muted: #8a8f78;
+    --white: #faf8f4;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px;
+    height: 72px;
+    background: transparent;
+    transition: background 0.45s ease, box-shadow 0.45s ease;
+  }
+  nav.scrolled {
+    background: rgba(250,248,244,0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 rgba(74,87,48,0.1);
+  }
+
+  /* LOGO AREA */
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; flex-shrink: 0;
+  }
+  .nav-logo-img {
+    height: 32px; width: auto; display: block;
+    /* White version on dark hero */
+    filter: brightness(0) invert(1);
+    transition: filter 0.45s ease;
+    image-rendering: -webkit-optimize-contrast;
+  }
+  nav.scrolled .nav-logo-img {
+    /* Natural colors on light background */
+    filter: none;
+  }
+  .nav-play-badge {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--terra-light);
+    background: rgba(200,122,78,0.18);
+    border: 1px solid rgba(200,122,78,0.35);
+    padding: 3px 9px;
+    border-radius: 100px;
+    transition: color 0.45s, background 0.45s, border-color 0.45s;
+    white-space: nowrap;
+  }
+  nav.scrolled .nav-play-badge {
+    color: var(--terra);
+    background: rgba(200,122,78,0.1);
+    border-color: rgba(200,122,78,0.25);
+  }
+
+  /* NAV LINKS */
+  .nav-links { display: flex; gap: 6px; align-items: center; }
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+    letter-spacing: -0.01em;
+  }
+  nav.scrolled .nav-links a { color: var(--ink-mid); }
+  .nav-links a:hover {
+    color: white;
+    background: rgba(255,255,255,0.1);
+  }
+  nav.scrolled .nav-links a:hover {
+    color: var(--olive);
+    background: var(--cream);
+  }
+
+  /* NAV CTA */
+  .nav-cta {
+    background: rgba(255,255,255,0.15) !important;
+    color: white !important;
+    padding: 9px 20px !important;
+    border-radius: 100px !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    font-size: 14px !important; font-weight: 600 !important;
+    letter-spacing: -0.01em;
+    transition: background 0.2s !important, border-color 0.2s !important, transform 0.2s !important;
+  }
+  .nav-cta:hover {
+    background: rgba(255,255,255,0.25) !important;
+    transform: translateY(-1px) !important;
+  }
+  nav.scrolled .nav-cta {
+    background: var(--olive) !important;
+    border-color: var(--olive) !important;
+    color: white !important;
+  }
+  nav.scrolled .nav-cta:hover {
+    background: var(--terra) !important;
+    border-color: var(--terra) !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 90px 60px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--olive);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 30%, #6b7a48 0%, #4a5730 50%, #2e3820 100%);
+  }
+  .hero-noise {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .hero-decoration {
+    position: absolute; top: 0; right: 0;
+    width: 55%; height: 100%;
+    opacity: 0.07;
+  }
+  .hero-decoration svg { width: 100%; height: 100%; }
+
+  .hero-label {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.85);
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 8px 18px; border-radius: 100px;
+    margin-bottom: 36px; width: fit-content;
+  }
+  .hero-label .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--terra-light);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+  }
+
+  .hero-content { position: relative; max-width: 780px; }
+  .hero-logo { margin-bottom: 48px; }
+  .hero-wordmark {
+    display: inline-flex; align-items: center; gap: 0;
+    line-height: 1;
+  }
+  .hero-wordmark-part {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 42px;
+    letter-spacing: -0.03em;
+    color: white;
+  }
+  .hero-mountain-icon {
+    height: 42px; width: auto;
+    display: block; margin: 0 2px; flex-shrink: 0;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    font-weight: 800;
+    line-height: 1.0;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    text-wrap: balance;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--terra-light);
+  }
+
+  .hero-sub {
+    font-size: 20px; font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+    max-width: 540px;
+    margin-bottom: 52px;
+  }
+
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--terra);
+    color: white;
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 600;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--terra-light); transform: translateY(-2px); }
+  .btn-ghost {
+    color: rgba(255,255,255,0.8);
+    padding: 16px 28px;
+    border-radius: 100px;
+    font-size: 15px; font-weight: 400;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); color: white; }
+
+  .hero-stats {
+    position: absolute; right: 60px; bottom: 80px;
+    display: flex; gap: 48px;
+  }
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: white; line-height: 1;
+  }
+  .stat-label {
+    font-size: 13px; color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    50.001% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* PHILOSOPHY */
+  .section { padding: 120px 60px; }
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--terra); margin-bottom: 20px;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4vw, 60px);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .philosophy {
+    background: var(--white);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    min-height: 600px;
+  }
+  .philosophy-left {
+    padding: 100px 80px 100px 60px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--cream-dark);
+  }
+  .philosophy-left h2 { margin-bottom: 28px; }
+  .philosophy-left p {
+    font-size: 18px; line-height: 1.75; color: var(--ink-mid);
+    font-weight: 300; max-width: 460px;
+  }
+  .philosophy-right {
+    display: grid; grid-template-rows: 1fr 1fr;
+    overflow: hidden;
+  }
+  .philo-card {
+    padding: 48px 52px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    cursor: default; position: relative; overflow: hidden;
+    transition: filter 0.3s;
+  }
+  .philo-card:hover { filter: brightness(1.06); }
+  .philo-card.card-olive { background: var(--olive); }
+  .philo-card.card-terra { background: var(--terra); }
+  .philo-card-bg-num {
+    position: absolute; top: -10px; right: -10px;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 160px; line-height: 1;
+    color: rgba(255,255,255,0.06);
+    letter-spacing: -0.04em; pointer-events: none;
+    user-select: none;
+  }
+  .philo-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+  .philo-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+  .philo-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    color: white; margin-bottom: 10px;
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .philo-card p { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 300px; }
+
+  /* HOW IT WORKS — reimagined */
+  .how {
+    background: var(--ink);
+    padding: 0;
+    overflow: hidden;
+  }
+  .how-header {
+    text-align: center;
+    padding: 100px 60px 80px;
+  }
+  .how-header .section-label { color: var(--terra-light); }
+  .how-header h2 { color: white; margin-top: 12px; }
+  .how-header p {
+    font-size: 18px; color: rgba(255,255,255,0.4); margin-top: 20px;
+    font-weight: 300; max-width: 480px; margin-left: auto; margin-right: auto;
+    line-height: 1.7;
+  }
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; background: none; max-width: 100%;
+    border-radius: 0; margin: 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .step {
+    background: transparent;
+    padding: 64px 56px 80px;
+    position: relative;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.4s;
+  }
+  .step:last-child {
+    border-right: none;
+    background: transparent;
+  }
+  .step:last-child .step-num {
+    background: linear-gradient(135deg, var(--terra) 0%, rgba(200,122,78,0.2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .step:last-child h3 { color: white; font-size: inherit; }
+  .step:last-child p { color: rgba(255,255,255,0.45); font-size: inherit; }
+  .step:last-child::before { display: none; }
+  .step-highlight {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 24px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--terra-light);
+    background: rgba(200,122,78,0.12);
+    border: 1px solid rgba(200,122,78,0.25);
+    padding: 6px 14px; border-radius: 100px;
+  }
+  .step:hover { background: rgba(255,255,255,0.03); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 100px; font-weight: 800;
+    line-height: 1; letter-spacing: -0.05em;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, var(--terra) 0%, rgba(200,122,78,0.2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px; font-weight: 800;
+    color: white; margin-bottom: 16px; letter-spacing: -0.02em;
+  }
+  .step p { font-size: 16px; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 280px; }
+  .step-arrow { display: none; }
+
+  /* EXPERIENCES */
+  .experiences {
+    background: var(--ink);
+    padding: 120px 60px;
+  }
+  .experiences .section-label { color: var(--terra-light); }
+  .experiences h2 { color: var(--white); margin-bottom: 16px; }
+  .exp-sub { color: rgba(255,255,255,0.5); font-size: 17px; font-weight: 300; margin-bottom: 64px; max-width: 460px; }
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .exp-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 36px 28px;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .exp-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(200,122,78,0.4);
+    transform: translateY(-4px);
+  }
+  .exp-card.active {
+    background: var(--terra);
+    border-color: var(--terra);
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--terra), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .exp-card:hover::before, .exp-card.active::before { opacity: 1; }
+  .exp-emoji { font-size: 36px; margin-bottom: 20px; display: block; }
+  .exp-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: white; margin-bottom: 10px;
+  }
+  .exp-card p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .exp-card.active p { color: rgba(255,255,255,0.8); }
+  .exp-count {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 12px; font-weight: 600;
+    color: rgba(255,255,255,0.25);
+    font-family: 'Syne', sans-serif;
+  }
+  .exp-card.active .exp-count { color: rgba(255,255,255,0.6); }
+
+  /* USE CASES */
+  .usecases {
+    background: var(--cream);
+    padding: 120px 60px;
+  }
+  .usecases-header { margin-bottom: 64px; }
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .case-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 44px 36px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .case-card:hover {
+    border-color: var(--olive-pale);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(74,87,48,0.08);
+  }
+  .case-icon {
+    width: 64px; height: 64px;
+    background: var(--cream); border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 24px;
+  }
+  .case-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 10px; color: var(--ink);
+  }
+  .case-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .case-tag {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--olive-light);
+    background: var(--olive-pale);
+    padding: 5px 12px; border-radius: 100px;
+  }
+
+  /* ANTI-PASSIVE */
+  .antipassive {
+    background: var(--terra);
+    padding: 100px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 60px;
+  }
+  .antipassive-text { max-width: 640px; }
+  .antipassive .section-label { color: rgba(255,255,255,0.6); }
+  .antipassive h2 {
+    color: white; margin-top: 12px; margin-bottom: 28px;
+    font-size: clamp(36px, 4vw, 56px);
+  }
+  .antipassive p { color: rgba(255,255,255,0.8); font-size: 18px; font-weight: 300; line-height: 1.7; }
+  .versus {
+    flex-shrink: 0;
+    background: rgba(0,0,0,0.15);
+    border-radius: 24px;
+    padding: 40px;
+    min-width: 320px;
+  }
+  .versus-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .versus-row:last-child { border-bottom: none; }
+  .versus-no {
+    font-size: 20px; opacity: 0.4;
+    text-decoration: line-through;
+    flex: 1; font-size: 14px; color: white; font-weight: 300;
+  }
+  .versus-yes {
+    font-size: 20px;
+    flex: 1; font-size: 14px; color: white; font-weight: 500;
+  }
+  .v-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .v-no { background: rgba(255,255,255,0.1); }
+  .v-yes { background: rgba(255,255,255,0.25); }
+
+  /* CTA */
+  .cta-section {
+    background: var(--olive);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .cta-bg-text {
+    position: absolute; top: -20px; left: -10px; right: 0;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(120px, 16vw, 220px);
+    line-height: 0.9; letter-spacing: -0.04em;
+    color: rgba(255,255,255,0.04);
+    pointer-events: none; user-select: none;
+    white-space: nowrap;
+  }
+  .cta-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: flex-end; gap: 60px;
+    padding: 80px 60px 80px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .cta-left {}
+  .cta-section .section-label {
+    color: var(--terra-light);
+    margin-bottom: 24px;
+  }
+  .cta-section h2 {
+    color: white;
+    font-size: clamp(44px, 5.5vw, 80px);
+    margin-bottom: 0;
+    line-height: 1.0;
+  }
+  .cta-section h2 em {
+    font-style: normal;
+    color: var(--terra-light);
+  }
+  .cta-right {
+    display: flex; flex-direction: column; gap: 16px;
+    align-items: flex-end; flex-shrink: 0;
+  }
+  .cta-section p {
+    color: rgba(255,255,255,0.5); font-size: 16px;
+    font-weight: 300; line-height: 1.7;
+    max-width: 320px; text-align: right;
+    margin-bottom: 8px;
+  }
+  .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+  .btn-cta-primary {
+    background: var(--terra);
+    color: white; padding: 18px 40px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 600;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: background 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .btn-cta-primary:hover { background: var(--terra-light); transform: translateY(-2px); }
+  .btn-cta-ghost {
+    border: 1.5px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.75); padding: 17px 32px;
+    border-radius: 100px;
+    font-size: 15px; font-weight: 400;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .btn-cta-ghost:hover { border-color: white; color: white; transform: translateY(-2px); }
+  .cta-terra-bar {
+    height: 8px; background: var(--terra); width: 100%;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo-img {
+    height: 32px; width: auto; display: block;
+    filter: brightness(0) invert(1); opacity: 0.65;
+  }
+  .footer-wordmark { display: inline-flex; align-items: center; gap: 0; }
+  .footer-wordmark-part {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 26px;
+    letter-spacing: -0.03em; color: rgba(255,255,255,0.65);
+  }
+  .footer-tagline { color: rgba(255,255,255,0.3); font-size: 14px; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { color: rgba(255,255,255,0.4); font-size: 14px; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+  /* FLOATING BADGE */
+  .float-badge {
+    position: fixed; bottom: 32px; right: 32px;
+    background: var(--olive);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-size: 13px; font-weight: 600;
+    z-index: 200;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 32px rgba(74,87,48,0.35);
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    animation: floatIn 0.6s 1s both;
+  }
+  .float-badge:hover { background: var(--terra); transform: scale(1.04); }
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#4a5730">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#4a5730"/>
+    <rect x="60" y="60" width="300" height="48" rx="8" fill="rgba(255,255,255,0.15)"/>
+    <rect x="60" y="200" width="680" height="80" rx="8" fill="rgba(255,255,255,0.2)"/>
+    <rect x="60" y="300" width="520" height="80" rx="8" fill="rgba(255,255,255,0.2)"/>
+    <rect x="60" y="400" width="600" height="80" rx="8" fill="#c87a4e" opacity="0.8"/>
+    <rect x="60" y="500" width="440" height="80" rx="8" fill="rgba(255,255,255,0.2)"/>
+    <rect x="60" y="620" width="200" height="48" rx="24" fill="#c87a4e"/>
+  </svg>
+</template>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <img class="nav-logo-img" src="uploads/Logo_Vive_Valle-removebg-preview.png" alt="Vive Valle">
+    <span class="nav-play-badge">Play</span>
+  </a>
+  <div class="nav-links">
+    <a href="#experiencias">Experiencias</a>
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#contextos">Contextos</a>
+    <a href="#contacto" class="nav-cta">Solicitar acceso</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-decoration">
+    <svg viewBox="0 0 800 800" fill="none" preserveAspectRatio="xMidYMid slice">
+      <circle cx="600" cy="200" r="300" stroke="white" stroke-width="1" fill="none" opacity="0.3"/>
+      <circle cx="600" cy="200" r="200" stroke="white" stroke-width="1" fill="none" opacity="0.2"/>
+      <circle cx="600" cy="200" r="450" stroke="white" stroke-width="1" fill="none" opacity="0.15"/>
+      <line x1="300" y1="0" x2="800" y2="700" stroke="white" stroke-width="0.5" opacity="0.1"/>
+      <line x1="200" y1="100" x2="800" y2="500" stroke="white" stroke-width="0.5" opacity="0.1"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-label">
+      <span class="dot"></span>
+      Motor de experiencias sociales
+    </div>
+    <h1>Convierte una estancia<br>en una <em>experiencia</em><br>compartida.</h1>
+    <p class="hero-sub">Menos pantalla pasiva. Más risas, juego y recuerdos juntos. Para grupos que ya están juntos y quieren disfrutarlo de verdad.</p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">
+        Solicitar acceso anticipado
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#como-funciona" class="btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/><path d="M6.5 5.5L10.5 8l-4 2.5V5.5z" fill="rgba(255,255,255,0.7)"/></svg>
+        Ver cómo funciona
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">+40</div>
+      <div class="stat-label">Experiencias distintas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2–20</div>
+      <div class="stat-label">Jugadores por sesión</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Pantallas individuales</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<div class="philosophy">
+  <div class="philosophy-left reveal">
+    <div class="section-label">La filosofía</div>
+    <h2>No es un videojuego.<br>Es un motor de<br>convivencia.</h2>
+    <p style="margin-top: 24px;">La app activa lo que ya está ahí: el grupo. El objetivo no es ganar, sino romper el hielo, provocar risas, generar conversación y crear momentos que no se olvidan.</p>
+  </div>
+  <div class="philosophy-right">
+    <div class="philo-card card-olive reveal">
+      <div class="philo-card-bg-num">01</div>
+      <div class="philo-tag"><span class="philo-tag-dot"></span>Presencia</div>
+      <h3>La gente se mira</h3>
+      <p>Diseñadas para que el foco esté en las personas del grupo, no en la pantalla.</p>
+    </div>
+    <div class="philo-card card-terra reveal">
+      <div class="philo-card-bg-num">02</div>
+      <div class="philo-tag"><span class="philo-tag-dot"></span>Espontaneidad</div>
+      <h3>La gente improvisa</h3>
+      <p>Retos, decisiones y momentos que nadie puede predecir. Cada partida es única.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="como-funciona">
+  <div class="how-header reveal">
+    <div class="section-label">Cómo funciona</div>
+    <h2>Tres pasos para encender<br>la convivencia</h2>
+    <p>Sin descargas individuales. Sin registro. Una pantalla compartida para todo el grupo.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3>Escanea o abre</h3>
+      <p>El anfitrión abre la app desde cualquier dispositivo. Un código QR o pantalla compartida conecta a todos en segundos.</p>
+      <span class="step-highlight">Sin instalación</span>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <h3>Elige la experiencia</h3>
+      <p>Selecciona el tipo de momento: romper el hielo, reto creativo, juego competitivo, conversación profunda…</p>
+      <span class="step-highlight">+40 experiencias</span>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <h3>El grupo juega junto</h3>
+      <p>La app guía, provoca y facilita. El protagonismo lo tienen las personas. Siempre.</p>
+      <span class="step-highlight">El momento empieza aquí</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="experiences" id="experiencias">
+  <div class="section-label">Las experiencias</div>
+  <h2 style="color:white; margin-bottom:16px;">Cuatro modos,<br>infinitos momentos.</h2>
+  <p class="exp-sub">Cada modo está pensado para un tipo de energía de grupo diferente.</p>
+  <div class="exp-grid" id="expGrid">
+    <div class="exp-card active reveal" onclick="setActive(this)">
+      <span class="exp-count">12 exp.</span>
+      <span class="exp-emoji">🔥</span>
+      <h3>Rompe el hielo</h3>
+      <p>Para cuando el grupo acaba de llegar y necesita calentarse. Preguntas, confesiones y revelaciones divertidas.</p>
+    </div>
+    <div class="exp-card reveal" onclick="setActive(this)">
+      <span class="exp-count">8 exp.</span>
+      <span class="exp-emoji">🎭</span>
+      <h3>Retos creativos</h3>
+      <p>Improvisación, actuación, dibujo y expresión. El grupo se sorprende a sí mismo.</p>
+    </div>
+    <div class="exp-card reveal" onclick="setActive(this)">
+      <span class="exp-count">15 exp.</span>
+      <span class="exp-emoji">⚡</span>
+      <h3>Competición sana</h3>
+      <p>Equipos, puntos, risas y una pizca de pique. Nadie se lo toma demasiado en serio.</p>
+    </div>
+    <div class="exp-card reveal" onclick="setActive(this)">
+      <span class="exp-count">6 exp.</span>
+      <span class="exp-emoji">💬</span>
+      <h3>Conexión profunda</h3>
+      <p>Conversaciones guiadas que van más allá de la superficie. Para grupos que quieren conocerse de verdad.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANTI-PASSIVE -->
+<section class="antipassive">
+  <div class="antipassive-text reveal">
+    <div class="section-label">No es esto</div>
+    <h2>Diseñado para lo que<br>NO hacen otras apps.</h2>
+    <p>No somos una red social. No somos un videojuego. No conectamos desconocidos. Somos el catalizador de los momentos que ya tienes delante.</p>
+  </div>
+  <div class="versus reveal">
+    <div class="versus-row">
+      <div class="v-icon v-no">✕</div>
+      <div class="versus-no">Red social</div>
+      <div class="v-icon v-yes">✓</div>
+      <div class="versus-yes">Motor de convivencia</div>
+    </div>
+    <div class="versus-row">
+      <div class="v-icon v-no">✕</div>
+      <div class="versus-no">Videojuego individual</div>
+      <div class="v-icon v-yes">✓</div>
+      <div class="versus-yes">Experiencia de grupo</div>
+    </div>
+    <div class="versus-row">
+      <div class="v-icon v-no">✕</div>
+      <div class="versus-no">Conectar desconocidos</div>
+      <div class="v-icon v-yes">✓</div>
+      <div class="versus-yes">Activar a quien ya está</div>
+    </div>
+    <div class="versus-row">
+      <div class="v-icon v-no">✕</div>
+      <div class="versus-no">Pantalla individual</div>
+      <div class="v-icon v-yes">✓</div>
+      <div class="versus-yes">Una sola pantalla compartida</div>
+    </div>
+    <div class="versus-row">
+      <div class="v-icon v-no">✕</div>
+      <div class="versus-no">Objetivo: ganar</div>
+      <div class="v-icon v-yes">✓</div>
+      <div class="versus-yes">Objetivo: recordar</div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="usecases" id="contextos">
+  <div class="usecases-header reveal">
+    <div class="section-label">Contextos</div>
+    <h2>Pensado por Vive Valle.<br>Construido para crecer.</h2>
+  </div>
+  <div class="cases-grid">
+    <div class="case-card reveal">
+      <div class="case-icon">🏡</div>
+      <h3>Casas rurales</h3>
+      <p>La experiencia de alojamiento rural que va más allá del descanso. El grupo disfruta la estancia como nunca.</p>
+      <span class="case-tag">Origen</span>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-icon">🏨</div>
+      <h3>Hoteles boutique</h3>
+      <p>Un diferencial real para alojamientos que buscan experiencias únicas, no solo una cama.</p>
+      <span class="case-tag">Próximo</span>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-icon">⛺</div>
+      <h3>Campings y glamping</h3>
+      <p>Noches alrededor del fuego con una app que multiplica la magia del momento.</p>
+      <span class="case-tag">Próximo</span>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-icon">🎉</div>
+      <h3>Eventos privados</h3>
+      <p>Cumpleaños, despedidas, reuniones familiares. Donde haya grupo, hay posibilidad.</p>
+      <span class="case-tag">Próximo</span>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-icon">🤝</div>
+      <h3>Team building</h3>
+      <p>Equipos que se conocen de verdad, no que completan ejercicios. Convivencia real.</p>
+      <span class="case-tag">Próximo</span>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-icon">🍽️</div>
+      <h3>Restauración experiencial</h3>
+      <p>Convierte la sobremesa en el plato estrella. La conversación como propuesta gastronómica.</p>
+      <span class="case-tag">Próximo</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contacto">
+  <div class="cta-bg-text">Juega.<br>Ríete.<br>Recuerda.</div>
+  <div class="cta-inner">
+    <div class="cta-left reveal">
+      <div class="section-label">Acceso anticipado</div>
+      <h2>Activa tu grupo.<br><em>Ahora.</em></h2>
+    </div>
+    <div class="cta-right reveal">
+      <p>Únete a los primeros alojamientos que están transformando la estancia en algo memorable.</p>
+      <div class="cta-buttons">
+        <a href="mailto:hola@vivevalle.es" class="btn-cta-primary">
+          Solicitar acceso
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="mailto:hola@vivevalle.es" class="btn-cta-ghost">Hablar con el equipo</a>
+      </div>
+    </div>
+  </div>
+  <div class="cta-terra-bar"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img class="footer-logo-img" src="uploads/Logo_Vive_Valle-removebg-preview.png" alt="Vive Valle">
+  <span class="footer-tagline">Menos pantalla pasiva. Más risas, juego y recuerdos juntos.</span>
+  <div class="footer-links">
+    <a href="#">Privacidad</a>
+    <a href="#">Contacto</a>
+    <a href="#">Instagram</a>
+  </div>
+</footer>
+
+<!-- FLOATING BADGE -->
+<a href="#contacto" class="float-badge">
+  🎮 Solicitar acceso
+</a>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Experience cards
+  function setActive(card) {
+    document.querySelectorAll('.exp-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+  }
+</script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "#c87a4e",
+  "heroHeadline": "Convierte una estancia en una experiencia compartida.",
+  "showStats": true,
+  "darkHero": true
+}/*EDITMODE-END*/;
+
+function TweaksApp() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--terra', tweaks.accentColor);
+    document.documentElement.style.setProperty('--terra-light', tweaks.accentColor + 'cc');
+  }, [tweaks.accentColor]);
+
+  React.useEffect(() => {
+    const statsEl = document.querySelector('.hero-stats');
+    if (statsEl) statsEl.style.display = tweaks.showStats ? 'flex' : 'none';
+  }, [tweaks.showStats]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection title="Marca">
+        <TweakColor label="Color acento" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
+      </TweakSection>
+      <TweakSection title="Hero">
+        <TweakText label="Titular principal" value={tweaks.heroHeadline} onChange={v => setTweak('heroHeadline', v)} />
+        <TweakToggle label="Mostrar estadísticas" value={tweaks.showStats} onChange={v => setTweak('showStats', v)} />
+      </TweakSection>
+    </TweaksPanel>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<TweaksApp />);
+</script>
+<div id="tweaks-root"></div>
+</body>
+</html>

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TenantProvider } from "./context/TenantContext";
 import { AppProvider } from "./context/AppContext";
+import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
 import GroupPage from "./pages/GroupPage";
 import MomentPage from "./pages/MomentPage";
@@ -17,6 +18,7 @@ const queryClient = new QueryClient();
 function Router() {
   return (
     <Switch>
+      <Route path="/landing" component={LandingPage} />
       <Route path="/" component={HomePage} />
       <Route path="/grupo" component={GroupPage} />
       <Route path="/momento" component={MomentPage} />
