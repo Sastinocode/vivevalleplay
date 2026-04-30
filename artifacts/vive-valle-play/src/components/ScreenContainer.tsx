@@ -1,6 +1,10 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
+/* Dark olive/ink background — matches landing page design language */
+const DARK_BG = "#0f130a";
+const DARK_FG = "#f0ece3";
+
 type ScreenContainerProps = {
   children: ReactNode;
   className?: string;
@@ -15,6 +19,7 @@ export function ScreenContainer({ children, className, centered }: ScreenContain
         centered && "items-center justify-center",
         className
       )}
+      style={{ backgroundColor: DARK_BG, color: DARK_FG }}
     >
       {children}
     </div>

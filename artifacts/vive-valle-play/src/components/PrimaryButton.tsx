@@ -18,11 +18,11 @@ export function PrimaryButton({
     <button
       {...props}
       className={cn(
-        "inline-flex items-center justify-center rounded-2xl font-medium tracking-wide transition-all duration-200",
-        "bg-primary text-primary-foreground shadow-sm",
-        "hover:brightness-105 active:scale-[0.975] active:shadow-none",
+        "inline-flex items-center justify-center rounded-full font-semibold tracking-wide transition-all duration-200",
+        "bg-primary text-primary-foreground",
+        "hover:brightness-110 active:scale-[0.975] active:brightness-95",
         "disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100",
-        size === "lg" ? "px-7 py-4 text-[15px]" : "px-5 py-3 text-sm",
+        size === "lg" ? "px-8 py-4 text-[15px]" : "px-5 py-3 text-sm",
         fullWidth && "w-full",
         className
       )}
