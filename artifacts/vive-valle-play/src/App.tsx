@@ -18,8 +18,8 @@ const queryClient = new QueryClient();
 function Router() {
   return (
     <Switch>
-      <Route path="/landing" component={LandingPage} />
-      <Route path="/" component={HomePage} />
+      <Route path="/" component={LandingPage} />
+      <Route path="/app" component={HomePage} />
       <Route path="/grupo" component={GroupPage} />
       <Route path="/momento" component={MomentPage} />
       <Route path="/juegos" component={LibraryPage} />

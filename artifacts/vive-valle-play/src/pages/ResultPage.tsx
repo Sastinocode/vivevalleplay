@@ -37,7 +37,7 @@ export default function ResultPage() {
     return (
       <ScreenContainer centered>
         <p className="text-muted-foreground text-[15px]">Resultado no encontrado.</p>
-        <button onClick={() => setLocation("/")} className="mt-4 text-primary underline text-[14px]">
+        <button onClick={() => setLocation("/app")} className="mt-4 text-primary underline text-[14px]">
           Volver al inicio
         </button>
       </ScreenContainer>
@@ -82,7 +82,7 @@ export default function ResultPage() {
             Otra experiencia
           </PrimaryButton>
           <SecondaryButton
-            onClick={() => { resetGame(); setLocation("/"); }}
+            onClick={() => { resetGame(); setLocation("/app"); }}
             data-testid="button-go-home"
           >
             Volver al inicio

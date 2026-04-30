@@ -105,7 +105,7 @@ export default function LandingPage() {
               Solicitar acceso anticipado
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </a>
-            <button className="lp-btn-ghost" onClick={() => setLocation("/grupo")}>
+            <button className="lp-btn-ghost" onClick={() => setLocation("/app")}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="rgba(255,255,255,0.7)" strokeWidth="1.2" /><path d="M6.5 5.5L10.5 8l-4 2.5V5.5z" fill="rgba(255,255,255,0.7)" /></svg>
               Probar la app
             </button>
@@ -250,7 +250,7 @@ export default function LandingPage() {
                 Solicitar acceso
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </a>
-              <button className="lp-btn-cta-ghost" onClick={() => setLocation("/grupo")}>
+              <button className="lp-btn-cta-ghost" onClick={() => setLocation("/app")}>
                 Probar la app →
               </button>
             </div>

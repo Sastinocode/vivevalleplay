@@ -20,7 +20,7 @@ export default function MemoryPage() {
       >
         {/* Back */}
         <button
-          onClick={() => setLocation("/")}
+          onClick={() => setLocation("/app")}
           data-testid="button-back"
           className="self-start -ml-2 p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
         >
@@ -50,7 +50,7 @@ export default function MemoryPage() {
               </p>
             </div>
             <PrimaryButton
-              onClick={() => setLocation("/")}
+              onClick={() => setLocation("/app")}
               fullWidth={false}
               className="px-8"
               data-testid="button-start-first-game"

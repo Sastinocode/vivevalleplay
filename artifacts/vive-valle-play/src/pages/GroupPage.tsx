@@ -21,7 +21,7 @@ export default function GroupPage() {
       >
         {/* Back */}
         <button
-          onClick={() => setLocation("/")}
+          onClick={() => setLocation("/app")}
           data-testid="button-back"
           className="self-start -ml-2 p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
         >
