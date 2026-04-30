@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { BookOpen } from "lucide-react";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { PrimaryButton } from "../components/PrimaryButton";
+import { useTenant } from "../context/TenantContext";
 
 export default function HomePage() {
   const [, setLocation] = useLocation();
+  const { brand } = useTenant();
 
   return (
     <ScreenContainer centered className="relative overflow-hidden">
@@ -13,11 +15,11 @@ export default function HomePage() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="absolute -top-24 -right-16 w-72 h-72 rounded-full opacity-30"
-          style={{ background: "radial-gradient(circle, hsl(14 42% 70% / 0.35), transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.30), transparent 70%)" }}
         />
         <div
           className="absolute -bottom-20 -left-12 w-64 h-64 rounded-full opacity-20"
-          style={{ background: "radial-gradient(circle, hsl(78 18% 60% / 0.3), transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, hsl(var(--secondary) / 0.25), transparent 70%)" }}
         />
       </div>
 
@@ -30,9 +32,10 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Monogram mark */}
           <div className="w-16 h-16 rounded-[20px] bg-primary/10 flex items-center justify-center shadow-sm">
-            <span className="font-serif text-3xl text-primary leading-none select-none">V</span>
+            <span className="font-serif text-3xl text-primary leading-none select-none">
+              {brand.monogram}
+            </span>
           </div>
 
           <div>
@@ -40,10 +43,10 @@ export default function HomePage() {
               className="font-serif text-[38px] font-semibold text-foreground leading-[1.1] tracking-tight"
               data-testid="text-app-title"
             >
-              Vive Valle Play
+              {brand.name}
             </h1>
             <p className="text-[15px] text-muted-foreground mt-2 leading-relaxed">
-              Juegos y momentos para disfrutar juntos
+              {brand.tagline}
             </p>
           </div>
         </motion.div>
@@ -91,7 +94,7 @@ export default function HomePage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.7 }}
       >
-        Una experiencia de Vive Valle
+        {brand.footer}
       </motion.footer>
     </ScreenContainer>
   );

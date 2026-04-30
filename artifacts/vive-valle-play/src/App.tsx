@@ -1,6 +1,7 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import { TenantProvider } from "./context/TenantContext";
 import { AppProvider } from "./context/AppContext";
 import HomePage from "./pages/HomePage";
 import GroupPage from "./pages/GroupPage";
@@ -31,12 +32,14 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
-      </AppProvider>
+      <TenantProvider>
+        <AppProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </AppProvider>
+      </TenantProvider>
     </QueryClientProvider>
   );
 }
