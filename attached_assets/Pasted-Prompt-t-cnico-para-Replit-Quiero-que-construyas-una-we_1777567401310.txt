@@ -1,0 +1,369 @@
+Prompt técnico para Replit
+Quiero que construyas una web app mobile-first llamada Vive Valle Play.
+Objetivo del producto
+La app está diseñada para que personas que ya están juntas en una casa rural, alojamiento, evento o escapada puedan:
+•	jugar juntas 
+•	reírse 
+•	socializar 
+•	conectar 
+•	improvisar 
+•	crear recuerdos 
+•	vivir momentos compartidos 
+No quiero una app para jugar con desconocidos.
+No quiero una red social.
+No quiero un videojuego tradicional.
+Quiero una app que funcione como un motor de experiencias sociales guiadas, pensada primero para los clientes de Vive Valle, pero construida desde el principio para poder expandirse a otros contextos:
+•	casas rurales 
+•	hoteles boutique 
+•	apartamentos turísticos 
+•	campings 
+•	eventos privados 
+•	cumpleaños 
+•	team building 
+•	restauración experiencial 
+•	turismo y ocio 
+La idea central es:
+“Menos pantalla pasiva. Más juego, risas y recuerdos juntos.”
+________________________________________
+Filosofía del producto
+La app debe activar la convivencia del grupo.
+El objetivo no es “ganar”, sino:
+•	romper el hielo 
+•	generar conversación 
+•	provocar risas 
+•	fomentar creatividad 
+•	facilitar momentos memorables 
+•	crear recuerdos compartidos 
+La app debe hacer que la gente:
+•	se mire 
+•	se escuche 
+•	se pique sanamente 
+•	improvise 
+•	hable entre sí 
+•	se divierta en grupo 
+________________________________________
+MVP que quiero construir
+Quiero una v1 sencilla, funcional y bonita, con una arquitectura sólida para poder crecer después.
+Esta primera versión debe incluir:
+1. Pantalla de bienvenida
+Una home clara y atractiva.
+Debe incluir:
+•	logo o título: Vive Valle Play 
+•	subtítulo tipo:
+“Juegos y momentos para disfrutar juntos” 
+•	CTA principal: Empezar 
+•	diseño cálido, limpio y muy visual 
+________________________________________
+2. Selección de tipo de grupo
+El usuario debe poder elegir el tipo de grupo:
+•	Familia 
+•	Amigos 
+•	Pareja 
+•	Grupo mixto 
+No hace falta registro.
+Esto debe servir para adaptar el tono y las recomendaciones.
+________________________________________
+3. Selección de momento
+La app debe preguntar en qué momento están:
+•	Acabamos de llegar 
+•	Tarde tranquila 
+•	Antes de cenar 
+•	Noche 
+•	Despedida 
+Según esta selección, la app recomendará juegos o packs concretos.
+________________________________________
+4. Biblioteca de experiencias
+La app debe contener una biblioteca de juegos y dinámicas sociales.
+Cada experiencia debe tener:
+•	id 
+•	título 
+•	descripción 
+•	categoría 
+•	duración estimada 
+•	dificultad 
+•	tipo de grupo recomendado 
+•	momento recomendado 
+•	número ideal de personas 
+•	lista de rondas o pasos 
+•	sistema de puntuación opcional 
+•	cierre final 
+________________________________________
+5. Modo juego guiado
+Cada juego debe mostrarse paso a paso.
+Cada paso o ronda puede incluir:
+•	título 
+•	instrucción breve 
+•	tipo de interacción 
+•	botón siguiente 
+•	temporizador opcional 
+•	puntuación opcional 
+•	pista opcional 
+Tipos de interacción que quiero soportar en esta v1:
+•	solo lectura / instrucción 
+•	votación interna del grupo 
+•	texto libre 
+•	elección entre opciones 
+•	contador manual / completar 
+•	reto con temporizador 
+•	pantalla de foto final simulada o marcador de “foto hecha” 
+No necesito cámara real obligatoria en esta versión.
+________________________________________
+6. Pantalla de resultados
+Cada experiencia debe acabar con una pantalla final que muestre:
+•	título del grupo o resultado 
+•	frase final 
+•	puntos si aplica 
+•	recuerdo generado 
+•	botón para volver al inicio 
+•	botón para jugar otra experiencia 
+________________________________________
+7. Pantalla de recuerdo
+Debe existir una pantalla sencilla donde se pueda mostrar algo como:
+•	nombre del grupo 
+•	lema 
+•	frase del viaje 
+•	categoría divertida obtenida 
+•	resumen del momento 
+•	espacio para una foto simbólica o marcador de recuerdo 
+No hace falta persistencia avanzada todavía, pero sí una estructura preparada para guardarlo más adelante.
+________________________________________
+
+Requisitos de UX/UI
+Estilo visual
+Quiero una estética:
+•	minimalista 
+•	elegante 
+•	cálida 
+•	moderna 
+•	fácil de usar 
+•	mobile-first 
+Inspiración:
+•	rural premium 
+•	hotel boutique 
+•	slow travel 
+•	diseño limpio mediterráneo 
+Paleta
+Usa tonos suaves y cálidos:
+•	arena 
+•	terracota suave 
+•	verde oliva apagado 
+•	blanco roto 
+•	piedra 
+•	marrón tostado 
+No quiero algo infantil ni demasiado gamer.
+________________________________________
+Sensación
+La app debe sentirse:
+•	acogedora 
+•	divertida 
+•	natural 
+•	premium pero cercana 
+________________________________________
+Navegación
+Muy simple:
+•	sin fricción 
+•	sin menús confusos 
+•	con botones grandes 
+•	textos cortos 
+•	buena legibilidad 
+•	interfaz intuitiva 
+________________________________________
+Requisitos técnicos
+Stack deseado
+Construye esta app con:
+•	React 
+•	TypeScript 
+•	Tailwind CSS 
+Si ves mejor usar Next.js, puedes usarlo.
+Si no, React con Vite también está bien.
+Prioriza simplicidad, rendimiento y facilidad de edición.
+________________________________________
+Arquitectura
+Quiero una arquitectura limpia y modular.
+Estructura recomendada
+src/
+  components/
+    ui/
+    layout/
+    games/
+  pages/
+    HomePage.tsx
+    GroupPage.tsx
+    MomentPage.tsx
+    LibraryPage.tsx
+    GamePage.tsx
+    ResultPage.tsx
+    MemoryPage.tsx
+  data/
+    games.ts
+    categories.ts
+    moments.ts
+    groups.ts
+  types/
+    game.ts
+    group.ts
+    moment.ts
+  hooks/
+    useGameEngine.ts
+    useLocalMemory.ts
+  utils/
+    scoring.ts
+    recommendation.ts
+    gameHelpers.ts
+  context/
+    AppContext.tsx
+  App.tsx
+  main.tsx
+________________________________________
+Gestión del estado
+Quiero algo sencillo.
+Puedes usar:
+•	React Context + hooks
+o 
+•	Zustand si lo prefieres 
+No quiero Redux.
+________________________________________
+Persistencia
+Para esta v1 usa:
+•	localStorage 
+Debe guardar como mínimo:
+•	tipo de grupo elegido 
+•	momento seleccionado 
+•	última experiencia jugada 
+•	resultado final o recuerdo simple 
+Más adelante podré cambiar esto a backend.
+________________________________________
+Modelo de datos
+Quiero un modelo claro y escalable.
+Tipo Game
+Debe incluir algo así:
+type GameStepType =
+  | "intro"
+  | "vote"
+  | "text"
+  | "choice"
+  | "timer"
+  | "challenge"
+  | "memory"
+  | "result";
+type GameStep = {
+  id: string;
+  title: string;
+  description: string;
+  type: GameStepType;
+  options?: string[];
+  durationSeconds?: number;
+  points?: number;
+  hint?: string;
+};
+type Game = {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  category: string;
+  durationMin: number;
+  difficulty: "easy" | "medium" | "fun";
+  recommendedGroups: string[];
+  recommendedMoments: string[];
+  minPlayers: number;
+  maxPlayers?: number;
+  steps: GameStep[];
+  endingTitle: string;
+  endingDescription: string;
+};
+________________________________________
+Motor de recomendación simple
+La app debe recomendar juegos según:
+•	tipo de grupo 
+•	momento del día 
+Ejemplo:
+•	Familia + Acabamos de llegar → El Juicio de la Casa 
+•	Amigos + Antes de cenar → La Cena Imposible 
+•	Pareja + Noche → experiencia más íntima o creativa 
+Hazlo con lógica simple basada en filtros y prioridad.
+________________________________________
+Componentes que quiero
+Quiero como mínimo estos componentes reutilizables:
+•	ScreenContainer 
+•	PrimaryButton 
+•	SecondaryButton 
+•	GameCard 
+•	StepCard 
+•	ProgressBar 
+•	GroupSelector 
+•	MomentSelector 
+•	ResultCard 
+•	MemorySummaryCard 
+________________________________________
+Comportamiento de la app
+Quiero este flujo:
+1.	Home 
+2.	Elegir grupo 
+3.	Elegir momento 
+4.	Ver recomendación 
+5.	Entrar en juego 
+6.	Ir avanzando por pasos 
+7.	Ver resultado final 
+8.	Guardar recuerdo básico 
+9.	Volver al inicio o explorar otra experiencia 
+________________________________________
+Copy y tono
+El tono de la app debe ser:
+•	cercano 
+•	ligero 
+•	ágil 
+•	con humor suave 
+•	inspirador 
+•	natural 
+No quiero tono infantil exagerado.
+No quiero tono corporativo frío.
+No quiero tono demasiado épico.
+Debe sonar humano y agradable.
+________________________________________
+Requisitos de código
+Quiero que generes:
+•	código limpio 
+•	componentes bien separados 
+•	tipos claros 
+•	datos fáciles de editar 
+•	comentarios breves cuando aporten valor 
+•	sin sobreingeniería 
+________________________________________
+Importante para escalabilidad futura
+Diseña esta app pensando en que más adelante pueda convertirse en una plataforma multi-contexto.
+Por eso, separa claramente:
+•	branding visual 
+•	contenido de juegos 
+•	lógica del motor 
+•	resultados / recuerdos 
+•	reglas de recomendación 
+No “hardcodees” Vive Valle en todos los archivos.
+Haz que Vive Valle sea el primer caso de uso, no el único.
+________________________________________
+Entregables que quiero ahora
+Quiero que generes directamente una primera versión funcional que incluya:
+1.	estructura completa del proyecto 
+2.	diseño UI base 
+3.	navegación entre pantallas 
+4.	los 3 juegos cargados 
+5.	motor simple de recomendación 
+6.	lógica paso a paso de cada juego 
+7.	pantalla final de resultados 
+8.	persistencia básica con localStorage 
+9.	código listo para ejecutar en Replit 
+________________________________________
+Extra
+Añade también:
+•	estado vacío elegante si aún no hay recuerdos 
+•	pequeño footer o detalle de marca discreto 
+•	animaciones suaves si son fáciles 
+•	buena experiencia móvil 
+________________________________________
+Prioridad máxima
+Antes que hacer muchas cosas, quiero que lo que haya esté bien hecho.
+Prioridades:
+1.	que se vea bien 
+2.	que sea fácil de usar 
+3.	que el flujo funcione 
+4.	que sea fácil ampliar después 
